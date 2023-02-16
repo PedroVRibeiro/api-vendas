@@ -1,7 +1,9 @@
+import 'reflect-metadata';
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import routes from './routes';
 import AppError from '@shared/errors/AppError';
+import '@shared/typeorm';
 
 const PORT = 3333;
 
@@ -27,7 +29,8 @@ app.use(
       status: 'error',
       message: 'Internal server error',
     });
-})
+  },
+);
 
 app.listen(PORT, () => {
   console.log('Server started on port 3333');
