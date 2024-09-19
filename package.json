@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "Pedro Ribeiro <ribeiro.tpedro@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts"
+  },
   "devDependencies": {
     "@types/node": "^22.5.5",
     "ts-node-dev": "^2.0.0",
