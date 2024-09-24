@@ -1,6 +1,9 @@
 **Command used to initialize tsconfig:** <br/>
 _yarn tsc --init --rootDir src --outDir build --esModuleInterop --resolveJsonModule --lib es6 --module commonjs --allowJs true --noImplicitAny true_
 
+**Comando para garantir o track dos paths customizados:**
+-r tsconfig-paths/register
+
 **Estrutura de pastas:**
 
 config - configurações de bibliotecas externas, como por exemplo, autenticação, upload, email, etc.
