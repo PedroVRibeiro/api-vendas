@@ -14,6 +14,10 @@ export class CreateProducts1727269693604 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
+            name: 'name',
+            type: 'varchar',
+          },
+          {
             name: 'price',
             type: 'decimal',
             precision: 10,
