@@ -4,6 +4,7 @@ import UsersRepository from '../typeorm/repositories/UsersRepository';
 import User from '../typeorm/entities/User';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
+import auth from '@config/auth';
 
 interface IRequest {
   email: string;
@@ -33,9 +34,9 @@ export default class CreateSessionsService {
       throw new AppError('Incorrect email or password.', 401);
     }
 
-    const token = sign({}, '47ff3fe29f91e072a1c97a231f92d083', {
+    const token = sign({}, auth.jwt.secret, {
       subject: user.id,
-      expiresIn: '1d',
+      expiresIn: auth.jwt.expiresIn,
     });
 
     return {
