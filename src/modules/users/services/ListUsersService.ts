@@ -1,6 +1,6 @@
 import { getCustomRepository } from 'typeorm';
 import UsersRepository from '../typeorm/repositories/UsersRepository';
-import User from '../typeorm/entitites/User';
+import User from '../typeorm/entities/User';
 
 export default class ListUsersService {
   public async execute(): Promise<User[]> {
