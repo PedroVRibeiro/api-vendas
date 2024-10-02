@@ -6,11 +6,15 @@ import AppError from '../errors/AppError';
 import '@shared/typeorm';
 import routes from './routes';
 import { errors } from 'celebrate';
+import uploadConfig from '@config/upload';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+//Definição de rota estática para as imagens. EX: '/files/nome-da-imagem'
+app.use('/files', express.static(uploadConfig.directory));
 
 app.use(routes);
 
