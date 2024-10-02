@@ -4,3 +4,7 @@ node_modules/
 build/
 temp/
 dist
+
+uploads/*
+!uploads/.gitkeep
+.DS_Store
