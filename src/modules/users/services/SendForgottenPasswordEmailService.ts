@@ -3,6 +3,7 @@ import AppError from '@shared/errors/AppError';
 import UsersRepository from '../typeorm/repositories/UsersRepository';
 import UsersTokensRepository from '../typeorm/repositories/UsersTokensRepository';
 import EtherealMail from '@config/mail/EtherealMail';
+import path from 'path';
 
 //only enable this for DEV, to bypass 'self signed certificate' error!!!
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
@@ -24,6 +25,13 @@ export default class SendForgottenPasswordEmailService {
 
     const { token } = await userTokensRepository.generateToken(user.id);
 
+    const mailTemplate = path.resolve(
+      __dirname,
+      '..',
+      'views',
+      'forgotten_password.hbs',
+    );
+
     try {
       await EtherealMail.sendMail({
         to: {
@@ -32,10 +40,10 @@ export default class SendForgottenPasswordEmailService {
         },
         subject: '[Email Teste] - Recuperação de senha',
         templateData: {
-          template: `Solicitação de redefinição de senha enviada por {{name}}: ${JSON.stringify(token)}`,
+          file: mailTemplate,
           variables: {
             name: user.name,
-            token,
+            link: `http://localhost:3333/password/reset?token=${token}`,
           },
         },
       });
