@@ -12,7 +12,11 @@ const usersAvatarController = new UsersAvatarController();
 
 const multerUpload = multer(uploadConfig);
 
-usersRouter.get('/', isAuthenticated, usersController.getAllUsers);
+usersRouter.use(isAuthenticated);
+
+usersRouter.get('/', usersController.getAllUsers);
+
+usersRouter.get('/logged-user', usersController.getUser);
 
 usersRouter.post(
   '/',
@@ -26,9 +30,27 @@ usersRouter.post(
   usersController.createUser,
 );
 
+usersRouter.put(
+  '/',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string(),
+      email: Joi.string().email(),
+      password: Joi.string(),
+      password_confirmation: Joi.string()
+        .valid(Joi.ref('password'))
+        .when('password', {
+          is: Joi.exist(),
+          then: Joi.required(),
+        }),
+      old_password: Joi.string(),
+    },
+  }),
+  usersController.updateUser,
+);
+
 usersRouter.patch(
   '/avatar',
-  isAuthenticated,
   multerUpload.single('avatar'),
   usersAvatarController.updateAvatar,
 );
