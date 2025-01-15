@@ -10,7 +10,6 @@ interface IRequest {
 export default class GetUserService {
   public async execute({ user_id }: IRequest): Promise<User> {
     const usersRepository = getCustomRepository(UsersRepository);
-    console.log(user_id);
     const user = await usersRepository.findById(user_id);
 
     if (!user) {
