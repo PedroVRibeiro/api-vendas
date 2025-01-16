@@ -4,8 +4,10 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import OrdersProducts from './OrdersProducts';
 
 @Entity('orders')
 class Order {
@@ -13,7 +15,7 @@ class Order {
   id: string;
 
   @ManyToOne(() => Customer)
-  @JoinColumn({ name: 'id' })
+  @JoinColumn({ name: 'customer_id' })
   customer: Customer;
 
   @CreateDateColumn()
@@ -21,6 +23,11 @@ class Order {
 
   @CreateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => OrdersProducts, order_products => order_products.order, {
+    cascade: true,
+  })
+  order_products: OrdersProducts[];
 }
 
 export default Order;
